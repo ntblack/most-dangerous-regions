@@ -1,0 +1,21 @@
+{
+  "name": "most-dangerous-regions",
+  "version": "1.0.0",
+  "description": "a commandline program that prints the 10 most dangerous regions by total earthquake energy",
+  "main": "index.js",
+  "bin": {
+    "most-dangerous-regions": "index.js"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node index.js"
+  },
+  "author": "ntblack",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^3.0.2"
+  },
+  "dependencies": {
+    "mathjs": "^3.4.1"
+  }
+}
