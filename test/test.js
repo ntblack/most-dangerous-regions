@@ -38,8 +38,6 @@ describe('sum-richter', function() {
     });
 
     it('should filter data by time', function() {
-
-
         const theYearTwoThousaaand = new Date(2000, 1, 1).getTime();
 
         // Only two of these features occurred since the year 2000
@@ -50,21 +48,33 @@ describe('sum-richter', function() {
         ];
 
         dataSource.clear();
-        dataSource.load(features);
-        const filteredData = dataSource.since(theYearTwoThousaaand);
-
-        assert.equal(2, filteredData.length);
+        return dataSource.load(features)
+            .then(() => {
+                return dataSource.since(theYearTwoThousaaand);
+            })
+            .then((filteredData) => {
+                assert.equal(2, filteredData.length);
+            });
     });
     
     it('should load data from url', function() {
+        dataSource.init();
         dataSource.clear();
-        assert.equal(0, dataSource.size());
+        return dataSource.size((n) => {
+            assert.equal(0, n);
+        }).then(() => {
+            const url = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson';
+            dataSource.update(url)
+                .then(() => {
 
-        const url = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson';
-        return dataSource.update(url)
-            .then(() => {
-                assert.notEqual(0, dataSource.size());
+                });
+        }).then(() => {
+            return dataSource.size((n) => {
+                assert.notEqual(0, n);
             });
+        });
+
+
     });
     
 });

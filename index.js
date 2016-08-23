@@ -12,9 +12,12 @@ const millisPerDay = 24 * 60 * 60 * 1000;
 const dataUri = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson';
 
 const run = function(days) {
+    dataSource.init();
+
     dataSource.update(dataUri)
         .then(() => {
-            const features = dataSource.since(Date.now() - days * millisPerDay);
+            return dataSource.since(Date.now() - days * millisPerDay);
+        }).then((features) => {
 
             const N = 10;
 
