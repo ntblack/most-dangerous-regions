@@ -36,5 +36,23 @@ describe('sum-richter', function() {
         assert.equal(2, data.get('A').length);
         assert.equal(1, data.get('B').length);
     });
+
+    it('should filter data by time', function() {
+
+
+        const theYearTwoThousaaand = new Date(2000, 1, 1).getTime();
+
+        // Only two of these features occurred since the year 2000
+        const features = [
+            {properties: {time: new Date(1999, 12, 30).getTime()}},
+            {properties: {time: theYearTwoThousaaand}},
+            {properties: {time: new Date(2000, 1, 1, 1).getTime()}}
+        ];
+
+        dataSource.load(features);
+        const filteredData = dataSource.since(theYearTwoThousaaand);
+
+        assert.equal(2, filteredData.length);
+    });
     
 });

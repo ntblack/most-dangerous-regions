@@ -3,9 +3,16 @@ const path = require('path');
 const mappingFunction = require(path.join(__dirname, 'lib', 'country-regions'));
 const regionMapper = require(path.join(__dirname, 'lib', 'region-mapper'));
 const sum = require(path.join(__dirname, 'lib', 'sum-richter'));
-const features = require(path.join(__dirname, 'data', 'all_month.json')).features;
+const dataSource = require(path.join(__dirname, 'lib', 'data-source'));
+
+dataSource.load(require(path.join(__dirname, 'data', 'all_month.json')).features);
+
+const millisPerDay = 24 * 60 * 60 * 1000;
+
+const features = dataSource.since(Date.now() - 30 * millisPerDay);
 
 const N = 10;
+
 const mappedData = regionMapper(features, mappingFunction);
 const topN = [];
 for(let [regionName, features] of mappedData) {
