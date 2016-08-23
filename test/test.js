@@ -49,10 +49,19 @@ describe('sum-richter', function() {
             {properties: {time: new Date(2000, 1, 1, 1).getTime()}}
         ];
 
+        dataSource.clear();
         dataSource.load(features);
         const filteredData = dataSource.since(theYearTwoThousaaand);
 
         assert.equal(2, filteredData.length);
+    });
+    
+    it('should load data from url', function() {
+        dataSource.clear();
+        assert.equal(0, dataSource.size());
+
+        dataSource.update('http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson');
+        assert.notEqual(0, dataSource.size());
     });
     
 });

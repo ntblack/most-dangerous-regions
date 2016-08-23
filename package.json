@@ -16,6 +16,9 @@
     "mocha": "^3.0.2"
   },
   "dependencies": {
-    "mathjs": "^3.4.1"
+    "commander": "^2.9.0",
+    "mathjs": "^3.4.1",
+    "request": "^2.74.0",
+    "request-promise": "^4.1.1"
   }
 }
