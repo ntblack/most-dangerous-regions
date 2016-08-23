@@ -60,8 +60,11 @@ describe('sum-richter', function() {
         dataSource.clear();
         assert.equal(0, dataSource.size());
 
-        dataSource.update('http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson');
-        assert.notEqual(0, dataSource.size());
+        const url = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson';
+        return dataSource.update(url)
+            .then(() => {
+                assert.notEqual(0, dataSource.size());
+            });
     });
     
 });
