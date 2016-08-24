@@ -42,11 +42,11 @@ const run = function(days) {
             }
 
             const tabSpacing = 20;
-            const headerFormat = `%' -${tabSpacing}s%' -${tabSpacing}s%s`;
-            console.log(sprintf(headerFormat, 'REGION', 'EARTHQUAKE COUNT', 'TOTAL MAGNITUDE'));
+            const format = `%' -${tabSpacing}s%' -${tabSpacing}s%s`;
+            console.log(sprintf(format, 'REGION', 'EARTHQUAKE COUNT', 'TOTAL MAGNITUDE'));
 
             topN.forEach((data) => {
-                console.log(sprintf(headerFormat, data.region, data.earthquakeCount, data.totalPower));
+                console.log(sprintf(format, data.region, data.earthquakeCount, sprintf('%.2f', data.totalPower)));
             });
 
         });
