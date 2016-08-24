@@ -4,16 +4,23 @@ const sum = require(path.join(__dirname, '..', 'lib', 'sum-richter'));
 const dataSource = require(path.join(__dirname, '..', 'lib', 'data-source'));
 const log = require('mathjs').log;
 
-const mappingFunction = require(path.join(__dirname, '..', 'lib', 'name-regions'));
 const regionMapper = require(path.join(__dirname, '..', 'lib', 'region-mapper'));
 
-describe('sum-richter', function() {
+const theYearTwoThousaaand = new Date(2000, 1, 1).getTime();
+// Only two of these features occurred since the year 2000
+const testData = [
+    {id: '1', properties: {time: new Date(1999, 12, 30).getTime()}},
+    {id: '2', properties: {time: theYearTwoThousaaand}},
+    {id: '3', properties: {time: new Date(2000, 1, 1, 1).getTime()}}
+];
+
+describe('Most Dangerous Regions', function() {
 
     const feature = function(mag) {
         return { properties: {mag} };
     };
 
-    it('should add log scaled values properly', function() {
+    it('should sum values according to log base 10 scale', function() {
         const data = [feature(1), feature(1)];
         assert.equal(log(20, 10), sum(data));
 
@@ -23,13 +30,14 @@ describe('sum-richter', function() {
         assert.equal(2, sum(tenOnes));
     });
     
-    it('should map values according to mapping function', function() {
+    it('should map values according to region mapping function', function() {
         const features = [
             {properties: {place: 'A', mag: 1.0}},
             {properties: {place: 'A', mag: 2.0}},
             {properties: {place: 'B', mag: 1.0}}
         ];
 
+        const mappingFunction = (feature) => feature.properties.place;
         // a map of region names to features
         const data = regionMapper(features, mappingFunction);
 
@@ -38,17 +46,9 @@ describe('sum-richter', function() {
     });
 
     it('should filter data by time', function() {
-        const theYearTwoThousaaand = new Date(2000, 1, 1).getTime();
-
-        // Only two of these features occurred since the year 2000
-        const features = [
-            {properties: {time: new Date(1999, 12, 30).getTime()}},
-            {properties: {time: theYearTwoThousaaand}},
-            {properties: {time: new Date(2000, 1, 1, 1).getTime()}}
-        ];
 
         dataSource.clear();
-        return dataSource.load(features)
+        return dataSource.load(testData)
             .then(() => {
                 return dataSource.since(theYearTwoThousaaand);
             })
@@ -73,8 +73,27 @@ describe('sum-richter', function() {
                 assert.notEqual(0, n);
             });
         });
+    });
 
 
+
+    it('should prevent duplicates', function() {
+
+        const features = [
+
+        ];
+
+        dataSource.clear();
+        return dataSource.load(testData)
+            .then(() => {
+                dataSource.load(testData) // load the same features twice
+            })
+            .then(() => {
+                return dataSource.since(theYearTwoThousaaand);
+            })
+            .then((filteredData) => {
+                assert.equal(2, filteredData.length);
+            });
     });
     
 });
