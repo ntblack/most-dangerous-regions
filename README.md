@@ -7,14 +7,13 @@ based on how much earthquake energy they experience.
 
 - [node](https://nodejs.org/en/download/current/) 6.4.0 or greater
 - [nvm](https://github.com/creationix/nvm/blob/master/README.markdown) (recommended when installing node)
-- [sqlite3](https://sqlite.org/download.html)
 
 ## Installation
 
 Run `./install.sh` to download dependencies and install the program
 (requires `bash` and `curl`).
 
-Or you can manually set up by downloading and installing node and sqlite3
+Or you can manually set up by downloading and installing node
 and then running `npm install -g .` from the project folder.
 
 ## How to run the program
