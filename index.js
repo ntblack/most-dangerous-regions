@@ -1,5 +1,6 @@
 #! /usr/bin/env node
 const path = require('path');
+const {sprintf} = require('sprintf-js');
 const mappingFunction = require(path.join(__dirname, 'lib', 'country-regions'));
 const regionMapper = require(path.join(__dirname, 'lib', 'region-mapper'));
 const sum = require(path.join(__dirname, 'lib', 'sum-richter'));
@@ -40,7 +41,14 @@ const run = function(days) {
                 topN.sort((a, b) => a.totalPower < b.totalPower);
             }
 
-            console.log(JSON.stringify(topN));
+            const tabSpacing = 20;
+            const headerFormat = `%' -${tabSpacing}s%' -${tabSpacing}s%s`;
+            console.log(sprintf(headerFormat, 'REGION', 'EARTHQUAKE COUNT', 'TOTAL MAGNITUDE'));
+
+            topN.forEach((data) => {
+                console.log(sprintf(headerFormat, data.region, data.earthquakeCount, data.totalPower));
+            });
+
         });
 };
 
