@@ -1,14 +1,21 @@
+# Most dangerous regions
+
+A command-line utility that lists the most dangerous regions on earth
+based on how much earthquake energy they experience.
+
 ## Dependencies
 
-- node 6.4.0 or greater
-- nvm (recommended)
+- [node](https://nodejs.org/en/download/current/) 6.4.0 or greater
+- [nvm](https://github.com/creationix/nvm/blob/master/README.markdown) (recommended when installing node)
+- [sqlite3](https://sqlite.org/download.html)
 
 ## Installation
 
-Run `./install.sh` to download dependencies and install the program (requires `bash` and `curl`)
+Run `./install.sh` to download dependencies and install the program
+(requires `bash` and `curl`).
 
-Or you can manually install by downloading the dependencies
-and then run `npm install -g .` from the project folder.
+Or you can manually set up by downloading and installing node and sqlite3
+and then running `npm install -g .` from the project folder.
 
 ## How to run the program
 
